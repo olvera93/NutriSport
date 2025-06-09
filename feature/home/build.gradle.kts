@@ -7,7 +7,6 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
-    alias(libs.plugins.serialization)
 }
 
 kotlin {
@@ -23,7 +22,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "navigation"
+            baseName = "home"
             isStatic = true
         }
     }
@@ -39,18 +38,20 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
 
-            implementation(libs.compose.navigation)
-            implementation(libs.kotlinx.serialization)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
 
-            implementation(project(path = ":feature:auth"))
-            implementation(project(path = ":feature:home"))
+            implementation(libs.compose.navigation)
+
             implementation(project(path = ":shared"))
+            implementation(project(path = ":data"))
+
         }
     }
 }
 
 android {
-    namespace = "com.olvera.navigation"
+    namespace = "com.olvera.home"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
